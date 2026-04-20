@@ -7,37 +7,30 @@ import styles from "./SeatMap.module.css";
 type Props = {
   grid: Grid;
   people: Person[];
+  shuffleNonce: number;
+  onShuffle: () => void;
 };
 
-type Display = Map<CellId, string>; // cellId → 表示名
+type Display = Map<CellId, string>;
+type Result = ReturnType<typeof assignSeats>;
 
 const ANIM_DURATION_MS = 1200;
 const ANIM_TICK_MS = 80;
 
-export function SeatMap({ grid, people }: Props) {
+export function SeatMap({ grid, people, shuffleNonce, onShuffle }: Props) {
   const peopleById = useMemo(() => {
     const m = new Map<string, Person>();
     for (const p of people) m.set(p.id, p);
     return m;
   }, [people]);
 
-  const [finalResult, setFinalResult] = useState(() =>
-    assignSeats(grid, people),
-  );
-  const [display, setDisplay] = useState<Display>(() =>
-    toDisplay(finalResult.assignment, peopleById),
-  );
+  const [finalResult, setFinalResult] = useState<Result | null>(null);
+  const [display, setDisplay] = useState<Display>(new Map());
   const [animating, setAnimating] = useState(false);
   const captureRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const result = assignSeats(grid, people);
-    setFinalResult(result);
-    setDisplay(toDisplay(result.assignment, peopleById));
-  }, [grid, people, peopleById]);
-
-  const shuffle = () => {
-    if (animating) return;
+    if (shuffleNonce === 0) return;
     const result = assignSeats(grid, people);
     setFinalResult(result);
 
@@ -66,7 +59,10 @@ export function SeatMap({ grid, people }: Props) {
       }
       setDisplay(next);
     }, ANIM_TICK_MS);
-  };
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shuffleNonce]);
 
   const savePng = async () => {
     if (!captureRef.current) return;
@@ -91,7 +87,7 @@ export function SeatMap({ grid, people }: Props) {
         <button
           type="button"
           className="primary"
-          onClick={shuffle}
+          onClick={onShuffle}
           disabled={animating}
         >
           {animating ? "シャッフル中..." : "シャッフル"}
@@ -101,7 +97,7 @@ export function SeatMap({ grid, people }: Props) {
         </button>
       </div>
 
-      {finalResult.warnings.length > 0 && !animating && (
+      {finalResult && finalResult.warnings.length > 0 && !animating && (
         <ul className={styles.warnings}>
           {finalResult.warnings.map((w, i) => (
             <li key={i}>{w}</li>
@@ -135,7 +131,7 @@ export function SeatMap({ grid, people }: Props) {
         </div>
       </div>
 
-      {!animating && finalResult.unseated.length > 0 && (
+      {!animating && finalResult && finalResult.unseated.length > 0 && (
         <div className={styles.unseated}>
           <h4>未配置 ({finalResult.unseated.length})</h4>
           <ul>

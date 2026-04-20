@@ -17,51 +17,65 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("grid");
   const [grid, setGrid] = useState<Grid>(initialGrid);
   const [people, setPeople] = useState<Person[]>([]);
+  const [shuffleNonce, setShuffleNonce] = useState(0);
+  const hasShuffled = shuffleNonce > 0;
+
+  const runInitialShuffle = () => {
+    setShuffleNonce((n) => n + 1);
+    setTab("run");
+  };
+
+  const triggerShuffle = () => {
+    setShuffleNonce((n) => n + 1);
+  };
+
+  const visibleTabs: { id: Tab; label: string }[] = [
+    { id: "grid", label: "配置" },
+    { id: "names", label: "名前" },
+    ...(hasShuffled ? [{ id: "run" as Tab, label: "実行" }] : []),
+  ];
 
   return (
     <div className={styles.app}>
       <header className={styles.header}>
-        <h1>席替え</h1>
-        <nav className={styles.tabs}>
-          <TabButton active={tab === "grid"} onClick={() => setTab("grid")}>
-            1. 配置
-          </TabButton>
-          <TabButton active={tab === "names"} onClick={() => setTab("names")}>
-            2. 名前
-          </TabButton>
-          <TabButton active={tab === "run"} onClick={() => setTab("run")}>
-            3. 実行
-          </TabButton>
+        <h1 className={styles.title}>席替え</h1>
+        <nav className={styles.tabs} aria-label="工程">
+          {visibleTabs.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className={`${styles.tab} ${tab === t.id ? styles.tabActive : ""}`}
+              onClick={() => setTab(t.id)}
+            >
+              {t.label}
+            </button>
+          ))}
         </nav>
       </header>
 
       <main className={styles.main}>
-        {tab === "grid" && <GridEditor grid={grid} onChange={setGrid} />}
-        {tab === "names" && (
-          <NameInput grid={grid} people={people} onChange={setPeople} />
+        <div className={tab === "grid" ? styles.pane : styles.paneHidden}>
+          <GridEditor grid={grid} onChange={setGrid} />
+        </div>
+        <div className={tab === "names" ? styles.pane : styles.paneHidden}>
+          <NameInput
+            grid={grid}
+            people={people}
+            onChange={setPeople}
+            onExecute={!hasShuffled ? runInitialShuffle : undefined}
+          />
+        </div>
+        {hasShuffled && (
+          <div className={tab === "run" ? styles.pane : styles.paneHidden}>
+            <SeatMap
+              grid={grid}
+              people={people}
+              shuffleNonce={shuffleNonce}
+              onShuffle={triggerShuffle}
+            />
+          </div>
         )}
-        {tab === "run" && <SeatMap grid={grid} people={people} />}
       </main>
     </div>
-  );
-}
-
-function TabButton({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      className={`${styles.tab} ${active ? styles.tabActive : ""}`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
   );
 }

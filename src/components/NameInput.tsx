@@ -7,9 +7,10 @@ type Props = {
   grid: Grid;
   people: Person[];
   onChange: (people: Person[]) => void;
+  onExecute?: () => void;
 };
 
-export function NameInput({ grid, people, onChange }: Props) {
+export function NameInput({ grid, people, onChange, onExecute }: Props) {
   const [bulk, setBulk] = useState("");
 
   const applyBulk = () => {
@@ -130,6 +131,19 @@ export function NameInput({ grid, people, onChange }: Props) {
           })}
         </ul>
       </section>
+
+      {onExecute && (
+        <div className={styles.execute}>
+          <button
+            type="button"
+            className="primary"
+            onClick={onExecute}
+            disabled={people.length === 0}
+          >
+            実行
+          </button>
+        </div>
+      )}
     </div>
   );
 }

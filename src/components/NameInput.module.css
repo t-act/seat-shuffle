@@ -1,23 +1,27 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 }
 
 .bulk {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.bulk h3 {
+.bulk h3,
+.listHeader h3 {
   margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--fg-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .bulk textarea {
-  width: 100%;
   font-family: inherit;
-  resize: vertical;
 }
 
 .bulkButtons {
@@ -26,8 +30,8 @@
 }
 
 .hint {
-  color: #52606d;
-  font-size: 0.85rem;
+  color: var(--fg-mute);
+  font-size: 0.82rem;
   margin: 0;
 }
 
@@ -35,32 +39,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.listHeader h3 {
-  margin: 0;
+  gap: 12px;
+  margin-bottom: 4px;
 }
 
 .empty {
-  color: #7b8794;
-  font-size: 0.9rem;
+  color: var(--fg-mute);
+  font-size: 0.88rem;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
 }
 
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  border-top: 1px solid var(--line);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 160px 36px;
-  gap: 8px;
+  grid-template-columns: 1fr 180px 28px;
+  gap: 16px;
   align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .nameInput {
@@ -68,13 +73,24 @@
 }
 
 .removeBtn {
-  width: 36px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
-  color: #c94040;
-  border-color: #e0b4b4;
+  border: none;
+  background: transparent;
+  color: var(--fg-mute);
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .removeBtn:hover:not(:disabled) {
-  background: #fceaea;
+  background: transparent;
+  color: var(--fg);
+}
+
+.execute {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }

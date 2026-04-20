@@ -1,7 +1,7 @@
 .wrap {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .actions {
@@ -10,83 +10,85 @@
 }
 
 .warnings {
-  background: #fff5f5;
-  border: 1px solid #f3b4b4;
-  color: #8a2222;
-  border-radius: 8px;
-  padding: 10px 14px 10px 28px;
+  border-top: 1px solid var(--fg);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  padding: 10px 0 10px 20px;
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.6;
+  font-size: 0.85rem;
+  line-height: 1.7;
 }
 
 .capture {
-  background: #fff;
-  border: 1px solid #d5dbe2;
-  border-radius: 10px;
-  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .frontBar {
-  background: #2b3a55;
-  color: #fff;
+  border-top: 1px solid var(--fg);
+  border-bottom: 1px solid var(--line);
   text-align: center;
   padding: 8px 0;
-  border-radius: 6px;
-  font-weight: 600;
-  letter-spacing: 0.3em;
+  font-size: 0.78rem;
+  letter-spacing: 0.4em;
+  color: var(--fg-mid);
 }
 
 .grid {
   display: grid;
-  gap: 8px;
+  gap: 4px;
 }
 
 .cell {
   aspect-ratio: 1.4 / 1;
-  min-height: 62px;
+  min-height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-radius: 8px;
-  border: 1px solid #9aa5b1;
-  background: #f8fafc;
-  color: #1a1a1a;
-  font-weight: 600;
+  border-radius: 0;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  font-weight: 500;
   padding: 4px;
   word-break: break-word;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  transition: border-color 0.12s ease;
 }
 
 .disabled {
-  background: #e4e7eb;
+  background: var(--surface);
+  border-color: var(--line-soft);
   border-style: dashed;
   color: transparent;
 }
 
 .empty {
-  color: #9aa5b1;
+  color: var(--fg-mute);
   font-weight: 400;
-  background: #fff;
 }
 
 .unseated {
-  background: #fff8ec;
-  border: 1px solid #f2d48a;
-  border-radius: 8px;
-  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0 0;
 }
 
 .unseated h4 {
   margin: 0 0 6px 0;
-  color: #8a5a22;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--fg-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .unseated ul {
   margin: 0;
-  padding-left: 20px;
+  padding-left: 18px;
+  font-size: 0.9rem;
 }
