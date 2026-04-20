@@ -1,0 +1,80 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bulk {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bulk h3 {
+  margin: 0;
+}
+
+.bulk textarea {
+  width: 100%;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.bulkButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.hint {
+  color: #52606d;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.listHeader h3 {
+  margin: 0;
+}
+
+.empty {
+  color: #7b8794;
+  font-size: 0.9rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 160px 36px;
+  gap: 8px;
+  align-items: center;
+}
+
+.nameInput {
+  width: 100%;
+}
+
+.removeBtn {
+  width: 36px;
+  height: 32px;
+  padding: 0;
+  color: #c94040;
+  border-color: #e0b4b4;
+}
+
+.removeBtn:hover:not(:disabled) {
+  background: #fceaea;
+}
